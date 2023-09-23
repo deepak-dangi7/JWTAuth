@@ -36,16 +36,6 @@ public class JwtTokenUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    // public boolean validateToken(String token) {
-    //     try {
-    //         Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-    //         return true;
-    //     } catch (Exception e) {
-    //         // Token validation failed
-    //         return false;
-    //     }
-    // }
-
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
@@ -63,3 +53,60 @@ public class JwtTokenUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 }
+
+
+
+
+// import io.jsonwebtoken.Claims;
+// import io.jsonwebtoken.Jwts;
+// import io.jsonwebtoken.SignatureAlgorithm;
+// import org.springframework.stereotype.Component;
+
+// import java.util.Date;
+// import java.util.HashMap;
+// import java.util.Map;
+
+// @Component
+// public class JwtTokenProvider {
+
+//     private final String SECRET_KEY = "YourSecretKeyHere"; // Replace with your secret key
+//     private final long EXPIRATION_TIME = 864_000_000; // 10 days in milliseconds
+
+//     // Generate a JWT token
+//     public String generateToken(String username) {
+//         Map<String, Object> claims = new HashMap<>();
+//         return createToken(claims, username);
+//     }
+
+//     // Create the token
+//     private String createToken(Map<String, Object> claims, String subject) {
+//         Date now = new Date();
+//         Date expirationDate = new Date(now.getTime() + EXPIRATION_TIME);
+
+//         return Jwts.builder()
+//                 .setClaims(claims)
+//                 .setSubject(subject)
+//                 .setIssuedAt(now)
+//                 .setExpiration(expirationDate)
+//                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+//                 .compact();
+//     }
+
+//     // Validate a token
+//     public boolean validateToken(String token) {
+//         try {
+//             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+//             return true;
+//         } catch (Exception e) {
+//             // Token validation failed
+//             return false;
+//         }
+//     }
+
+//     // Extract the username from a token
+//     public String getUsernameFromToken(String token) {
+//         Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+//         return claims.getSubject();
+//     }
+// }
+
