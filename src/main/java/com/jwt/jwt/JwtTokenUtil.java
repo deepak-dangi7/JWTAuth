@@ -36,6 +36,16 @@ public class JwtTokenUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    // public boolean validateToken(String token) {
+    //     try {
+    //         Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+    //         return true;
+    //     } catch (Exception e) {
+    //         // Token validation failed
+    //         return false;
+    //     }
+    // }
+
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
